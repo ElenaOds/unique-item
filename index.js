@@ -1,14 +1,22 @@
 const output = document.querySelector('.output');
 const input = document.querySelector('.input');
 const button = document.querySelector('.button');
+const resetButton = document.querySelector('#reset');
+
+function setButtonDisabled() {
+    button.disabled = input.value === '';
+    resetButton.disabled = input.value === '';
+}
 
 input.addEventListener('input', (event) => {
-    const input = event.currentTarget.value;
+    let input = event.currentTarget.value;
+    setButtonDisabled();
+
 
 button.addEventListener('click', (event) => {
     const array = input.split(' ').map(element => element.split(""));
     let newArray = [];
-
+    button.setAttribute('disabled', true);
     array.forEach(element => {
         let sortedElements = [];
         let count = {};
@@ -43,11 +51,16 @@ button.addEventListener('click', (event) => {
             if(count[item] === 1) {
                 uniqueElements.push(item);
             }
-        }
-            
+        }   
         output.textContent = uniqueElements[0];
-    
-        console.log(output)
-    })
+        
+    })   
 })
+
+resetButton.addEventListener('click', (event) => {  
+    input.value = '';
+    output.textContent = '';
+     setButtonDisabled();
+})
+
 
